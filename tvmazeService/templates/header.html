@@ -1,0 +1,54 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- 定义导航栏 -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+
+    <!-- 导航栏商标 -->
+    <div class="navbar-header">
+      <a class="navbar-left" href="{% url 'tvmaze:index' %}">
+        <img src="/static/images/tvmaze.png">
+      </a>
+    </div>
+
+    <!-- 导航入口 -->
+    <div>
+      <ul class="navbar-nav">
+        <!-- 条目 -->
+        <li class="nav-item">
+            <div class="btn-group">
+              <button type="button" class="btn btn-primary">menu</button>
+              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a href="{% url 'tvmaze:shows' %}"><button class="dropdown-item" type="button">shows filter</button></a></li>
+                <li role="separator" class="divider"></li>
+<!--                <li><a href="{% url 'tvmaze:visualiza' %}"><button class="dropdown-item" type="button">visualization chart</button></a></li>-->
+              </ul>
+            </div>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</nav>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>

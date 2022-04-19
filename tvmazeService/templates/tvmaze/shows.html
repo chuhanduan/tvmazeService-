@@ -1,0 +1,163 @@
+<div id="page">
+<!-- extends表明此页面继承自 base.html 文件 -->
+{% extends "base.html" %}
+{% load staticfiles %}
+
+<!-- 写入 base.html 中定义的 title -->
+{% block title %}
+    shows
+{% endblock title %}
+
+<!-- 写入 base.html 中定义的 content -->
+{% block content %}
+
+<table id="tb_departments" data-filter-control="true" data-show-columns="true"></table>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>-->
+<script src="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.js"></script>
+<script src="{% static '/Bootstrap/js/bootstrap-table-export.min.js' %}"></script>
+<script src="{% static '/Bootstrap/js/tableExport.min.js' %}"></script>
+<script src="{% static '/Bootstrap/js/bootstrap-table-auto-refresh.js' %}"></script>
+<script>
+        window.operateEvents = {
+            // 当点击 class=watch 时触发
+            'click .watch': function (e,value,row,index) {
+                // 弹出提示,调试用
+                // window.confirm(JSON.stringify(row));
+                $.ajax({
+                     type: "post",
+                     url: "{% url 'tvmaze:visualiza' %}",
+                     data: {"showName":row['name']},
+                     traditional: true,
+                     dataType: "json",
+                     success: function(data){
+                         //window.location.href = "{% url 'tvmaze:visualiza' %}";
+                         $('#page').html(JSON.stringify(data));
+                     },
+                     error:function(data){
+                        // alert(JSON.stringify(data.responseText));
+                        // 比较奇怪ajax可以请求成功却总是跳转到error
+                        // window.location.href = "{% url 'tvmaze:visualiza' %}";
+                        $('#page').html(data.responseText);
+                     }
+                 })
+            }
+        };
+
+        $('#tb_departments').bootstrapTable({
+            //url: '/frontend/bootstrap-table/user.json',         //请求后台的 URL（*）
+            //method: 'get',                      //请求方式（*）
+            classes: "table table-bordered table-striped", //table-striped表示隔行变色
+            data: data,                      //当不使用上面的后台请求时，使用data来接收数据
+            toolbar: '#toolbar',                //工具按钮用哪个容器
+            striped: true,                      //是否显示行间隔色
+            cache: false,                       //是否使用缓存，默认为 true，所以一般情况下需要设置一下这个属性（*）
+            pagination: true,                   //是否显示分页（*）
+            sortable: false,                    //是否启用排序
+            sortOrder: "asc",                   //排序方式
+            sidePagination: "client",           //分页方式：client 客户端分页，server 服务端分页（*）
+            pageNumber:1,                       //初始化加载第一页，默认第一页
+            pageSize: 6,                        //每页的记录行数（*）
+            pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+            search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以个人感觉意义不大
+            strictSearch: false,                 //启用严格搜索。禁用比较检查。
+            showColumns: true,                  //是否显示所有的列
+            showRefresh: true,                  //是否显示刷新按钮
+            minimumCountColumns: 2,             //最少允许的列数
+            clickToSelect: true,                //是否启用点击选中行
+            //height: 500,                        //行高，如果没有设置 height 属性，表格自动根据记录条数觉得表格高度
+            uniqueId: "ID",                     //每一行的唯一标识，一般为主键列
+            showToggle:true,                    //是否显示详细视图和列表视图的切换按钮
+            cardView: false,                    //是否显示详细视图
+            detailView: false,                  //是否显示父子表
+            showExport: true,                   //是否显示导出按钮
+            exportDataType: "basic",              //basic', 'all', 'selected'.
+            buttonsAlign:"right",               //按钮位置
+            Icons:'glyphicon-export',
+            exportOptions:{
+                //ignoreColumn: [0,1],          //忽略某一列的索引
+                fileName: 'show msg',           //文件名称设置
+                worksheetName: 'sheet1',        //表格工作区名称
+                tableName: 'show',
+                excelstyles: ['background-color', 'color', 'font-size', 'font-weight'],
+                // onMsoNumberFormat: DoOnMsoNumberFormat
+            },
+            autoRefresh: true, 							    //设置 true 为启用自动刷新插件。这并不意味着启用自动刷新
+            autoRefreshStatus: true,						//设置 true 为启用自动刷新。这是表加载时状态自动刷新
+            autoRefreshInterval: 60,						//每次发生自动刷新的时间（以秒为单位）
+            autoRefreshSilent: true,						//设置为静默自动刷新
+            columns: [
+                {
+                    checkbox: true     //复选框标题，就是我们看到可以通过复选框选择整行
+                },
+                {
+                    field: 'name',
+                    title: 'name'                    //我们取 json 中 name 的值，并将表头 title 设置为name
+                },
+                {
+                    field: 'genres',
+                    title: 'genres',                //我们取 json 中 genres 的值，并将表头 title 设置为genres
+                    formatter:function(value,row,index){
+                        var s = '';
+                        genresList = value.split(',');
+                        for (var i=0;i<genresList.length;i++)
+                        {
+                            s += '<span class = "badge badge-primary">'+genresList[i]+'</span>';
+                        };
+		                return s;
+		            },
+                },
+                {
+                    field: 'rating',
+                    title: 'rating'               //我们取 json 中 rating 的值，并将表头 title 设置为rating
+                },
+                {
+                    field: 'summary',
+                    title: 'summary'               //我们取 json 中 summary 的值，并将表头 title 设置为summary
+                },
+                {
+                    field: 'imageurl',
+                    title: 'image',
+		            formatter:function(value,row,index){
+		                var s = '<a class = "view"  href="javascript:void(0)"><img style="width:100;height:150px;"  src="'+value+'" /></a>';
+		                return s;
+		            },
+		        },
+                {
+                    //ormatter:function(value,row,index) 对后台传入数据 进行操作 对数据重新赋值 返回 return 到前台
+                    //events 触发事件
+                    field: 'Button',
+                    title:"action",
+                    align: 'center',
+                    events:operateEvents,
+                    formatter:function(value,row,index){
+                        var watch = '<button type="button" class="btn btn-danger watch">about Actors</button>'
+                        return watch;
+                    }
+                }
+            ],
+            responseHandler: function (res) {
+                return res.data      //在加载远程数据之前，处理响应数据格式.
+                // 我们取的值在data字段中，所以需要先进行处理，这样才能获取我们想要的结果
+            },
+        });
+        var data = {{ data|safe }}; //列表
+        $('#tb_departments').bootstrapTable('load', data);
+
+
+</script>
+
+{% endblock content %}
+
+
+
+</div>
+
+
+
+
+
+
+
+

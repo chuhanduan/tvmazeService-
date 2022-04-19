@@ -1,0 +1,96 @@
+<!-- extends表明此页面继承自 base.html 文件 -->
+{% extends "base.html" %}
+{% load staticfiles %}
+
+<!-- 写入 base.html 中定义的 title -->
+{% block title %}
+    tvmaze
+{% endblock title %}
+
+<!-- 写入 base.html 中定义的 content -->
+{% block content %}
+<div class="jumbotron">
+  <div class="container">
+    <div class="jumbotron">
+      <h1><img src="/static/images/tiktok-banner-black-3-logo-svgrepo-com.svg" height="50" width="100" class="img-fluid" alt="Responsive image"></h1>
+<!--      <p><strong>The service will help you query actors, interfaces and related character information, and provide visual related reports</strong></p>-->
+      <p><a href="https://api.tvmaze.com" role="button"><img src="/static/images/apple-touch-icon-120x120.png" alt="logo"></a></p>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid" id="portfolio">
+    <hr>
+    <div class="row">
+        <div class="col-sm-2 col-md-2">
+            <div class="thumbnail">
+                <a href="#" target="_blank"> <img src="https://static.tvmaze.com/uploads/images/medium_portrait/1/4600.jpg" class="image" width="80%">
+                    <div class="imgDescription">
+<!--                        <h3 class="img-content"><strong></strong></h3>-->
+<!--                         <span class="modal-button">-->
+<!--                             <img src="" style="height:30px; width:30px;">-->
+<!--                        </span>-->
+                    </div>
+                </a>
+            </div>
+
+        </div>
+        <div class="col-sm-2 col-md-2">
+            <div class="thumbnail">
+                <a href="" target="_blank"> <img src="https://static.tvmaze.com/uploads/images/medium_portrait/1/4601.jpg" alt="..." class="image" width="80%">
+                    <div class="imgDescription">
+                        <h3 class="img-content" style="left:95px;"><strong></strong></h3>
+<!--                        <span class="modal-button" style="left:145px">-->
+<!--                            <img src="images/webdev.png" style="height:30px; width:auto;">-->
+
+<!--                        </span>-->
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-2 col-md-2">
+            <div class="thumbnail">
+                <a href="#"> <img src="https://static.tvmaze.com/uploads/images/medium_portrait/316/792450.jpg" alt="..." class="image" width="80%">
+                    <div class="imgDescription">
+                        <h3 class="img-content"></h3>
+                        <span class="modal-button"></span>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-2 col-md-2">
+            <div class="thumbnail">
+                <a href="#"> <img src="https://static.tvmaze.com/uploads/images/medium_portrait/1/4662.jpg" alt="..." class="image" width="80%">
+                    <div class="imgDescription">
+                        <h3 class="img-content"></h3>
+                        <span class="modal-button"></span>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-2 col-md-2">
+            <div class="thumbnail">
+                <a href="#"> <img src="https://static.tvmaze.com/uploads/images/medium_portrait/304/760085.jpg" alt="..." class="image" width="80%">
+                    <div class="imgDescription">
+                        <h3 class="img-content"></h3>
+                        <span class="modal-button"></span>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-2 col-md-2">
+            <div class="thumbnail">
+                <a href="#"> <img src="https://static.tvmaze.com/uploads/images/medium_portrait/1/4706.jpg" alt="..." class="image" width="80%">
+                    <div class="imgDescription">
+                        <h3 class="img-content"></h3>
+                        <span class="modal-button"></span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock content %}

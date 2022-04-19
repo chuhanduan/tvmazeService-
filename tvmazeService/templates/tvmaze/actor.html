@@ -1,0 +1,65 @@
+<!-- extends表明此页面继承自 base.html 文件 -->
+{% extends "base.html" %}
+{% load staticfiles %}
+
+<!-- 写入 base.html 中定义的 title -->
+{% block title %}
+    actors
+{% endblock title %}
+
+<!-- 写入 base.html 中定义的 content -->
+{% block content %}
+
+<div class="card text-center">
+    <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs">
+            {% for key,value in data.items %}
+                {% if key == firstGenre %}
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#{{key}}">{{ key }}</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#{{key}}">{{ key }}</a>
+                    </li>
+                {% endif %}
+        {% endfor %}
+        </ul>
+    </div>
+    <div class="tab-content card-body">
+        {% for key,value in data.items %}
+            {% if key == firstGenre %}
+                <div class="tab-pane active container-fluid" id="{{key}}">
+                    <div class="row">
+                        {% for item in value %}
+                            <div class="card card-header text-white bg-info" style="width: 15rem;">
+                                <img class="card-img-top" src="{{ item.1 }}" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ item.0 }}</h5>
+        <!--                            <p class="card-text">{{item.2}}</p>-->
+                                    <a href="#" class="btn btn-primary">Go Watch</a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% else %}
+                <div class="tab-pane container-fluid" id="{{key}}">
+                    <div class="row">
+                        {% for item in value %}
+                            <div class="card card-header text-white bg-info" style="width: 15rem;">
+                                <img class="card-img-top" src="{{ item.1 }}" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ item.0 }}</h5>
+        <!--                            <p class="card-text">{{item.2}}</p>-->
+                                    <a href="#" class="btn btn-primary">Go Watch</a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

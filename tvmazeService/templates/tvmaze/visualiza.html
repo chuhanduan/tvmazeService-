@@ -1,0 +1,30 @@
+<!-- extends表明此页面继承自 base.html 文件 -->
+{% extends "base.html" %}
+{% load staticfiles %}
+
+<!-- 写入 base.html 中定义的 title -->
+{% block title %}
+    actors
+{% endblock title %}
+
+<!-- 写入 base.html 中定义的 content -->
+{% block content %}
+
+<div class="container mt-5">
+  <div class="card-columns">
+      {% for actor in actors %}
+          <a class="card card-reveal" href="{% url 'tvmaze:actor' %}?actorid={{ actor.actorid }}">
+              {{actor.Imageurl}}
+              <img class="card-img-top" src="{{ actor.imageurl }}" />
+              <div class="card-body">
+                  <div class="card-title">{{ actor.name }}</div>
+              </div>
+          </a>
+      {% endfor %}
+  </div>
+</div>
+<!-- partial -->
+
+
+
+{% endblock content %}
